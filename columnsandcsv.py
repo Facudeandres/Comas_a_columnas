@@ -9,30 +9,35 @@ convertidor_coma_a_column = "Ingrese texto delimitado por comas"
 convertidor_column_a_coma = "Ingrese texto en columnas"
 
 text_input_coma = st.text_input(convertidor_coma_a_column)
-text_input_column = st.text_input(convertidor_column_a_coma, value='', type='default')
+text_input_column = st.text_area(convertidor_column_a_coma)
 
 def convertidor_coma_a_column(text):
-    if re.search(r',\s*|\s*,\s*', text):
-        return "\n".join(re.split(r',\s*|\s*,\s*', text)).strip()
+    if ',' in text:
+        return "\n".join(text.split(", ")).strip()
     else:
-        st.error(":ghost: Pusiste cualquier cosa Botardo :ghost:")
+        raise ValueError(":ghost: Pusiste cualquier cosa Botardo :ghost:")
 
 def convertidor_column_a_coma(text):
-    # Primero, dividimos el texto en líneas
-    lines = text.split('\n')
-    # Verificamos si hay líneas con valores separados por espacios
-    if any(re.search(r'\s+', line) for line in lines):
-        # Si hay líneas con valores separados por espacios, reemplazamos los espacios por comas
-        lines = [",".join(line.split()) for line in lines]
-    # Verificamos si hay líneas con valores separados por comas
-    if any(re.search(r',\s*', line) for line in lines):
-        st.error(":ghost: Pusiste cualquier cosa Botardo :ghost:")
-    else:
-        return ", ".join(lines)
+    lines = text.splitlines()
+    if any(',' in line for line in lines):
+        raise ValueError(":ghost: Pusiste cualquier cosa Botardo :ghost:")
+    return ", ".join(lines)
 
 if st.button(":hot_pepper: Convertir Texto :hot_pepper:"):
     if text_input_coma:
         result = convertidor_coma_a_column(text_input_coma)
+        st.success("Texto convertido:")
+        st.code(result, language='python')
+    elif text_input_column:
+        try:
+            result = convertidor_column_a_coma(text_input_column)
+            st.success("Texto convertido:")
+            st.code(result, language='python')
+        except ValueError as e:
+            st.error(str(e))
+    else:
+        raise ValueError(":ghost: Pusiste cualquier cosa Botardo :ghost:")
+
         if result:
             st.success("Texto convertido:")
             st.code(result, language='python')
