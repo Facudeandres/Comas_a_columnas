@@ -12,8 +12,8 @@ text_input_coma = st.text_input(convertidor_coma_a_column)
 text_input_column = st.text_area(convertidor_column_a_coma)
 
 def convertidor_coma_a_column(text):
-    if ',' in text:
-        return "\n".join(text.split(", ")).strip()
+    if re.search(",\s|\,", text):
+        return "\n".join(re.split(",\s|\,", text)).strip()
     else:
         raise ValueError(":ghost: Pusiste cualquier cosa Botardo :ghost:")
 
@@ -37,4 +37,3 @@ if st.button(":hot_pepper: Convertir Texto :hot_pepper:"):
             st.error(str(e))
     else:
         raise ValueError(":ghost: Pusiste cualquier cosa Botardo :ghost:")
-
