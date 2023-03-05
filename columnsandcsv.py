@@ -1,7 +1,6 @@
 import pandas as pd
 import numpy as np
 import streamlit as st
-import re
 
 st.header(":rainbow::rainbow: La peor App de la historia :rainbow::rainbow:")
 
