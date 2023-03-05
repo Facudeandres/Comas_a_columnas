@@ -3,20 +3,14 @@ import numpy as np
 import streamlit as st
 import re
 
-# Definir la constante TEXT_BOX_HEIGHT
-TEXT_BOX_HEIGHT = 5 * 22
+st.header(":rainbow::rainbow: La peor App de la historia :rainbow::rainbow:")
 
-# Configurar la página
-st.set_page_config(page_title="Conversor de texto",
-                   page_icon=":pencil:",
-                   layout="wide")
+convertidor_coma_a_column = "Ingrese texto delimitado por comas"
+convertidor_column_a_coma = "Ingrese texto en columnas"
 
-# Definir los cuadros de texto
-st.sidebar.header("Conversor de texto")
-text_input_coma = st.sidebar.text_input("Ingrese texto delimitado por comas", height=TEXT_BOX_HEIGHT)
-text_input_column = st.sidebar.text_area("Ingrese texto en columnas", height=TEXT_BOX_HEIGHT)
+text_input_coma = st.text_input(convertidor_coma_a_column)
+text_input_column = st.text_area(convertidor_column_a_coma)
 
-# Definir las funciones de conversión
 def convertidor_coma_a_column(text):
     if ',' in text:
         return "\n".join(text.split(", ")).strip()
@@ -29,7 +23,6 @@ def convertidor_column_a_coma(text):
         raise ValueError(":ghost: Pusiste cualquier cosa Botardo :ghost:")
     return ", ".join(lines)
 
-# Definir el botón de conversión
 if st.button(":hot_pepper: Convertir Texto :hot_pepper:"):
     if text_input_coma:
         result = convertidor_coma_a_column(text_input_coma)
